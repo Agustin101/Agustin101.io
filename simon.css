@@ -1,6 +1,6 @@
 .cuadro{
     opacity: 0.5;
-    border: 1.8em;
+    border: 1em;
     border-color: black;
     border-style: solid;
 }
@@ -8,14 +8,14 @@
 .rojo{
     background-color: red;
     height: 14em;
-    margin: 1em;
+    margin: 0.5em;
     border-bottom-left-radius: 100%;
 }
 
 .azul{
     background-color: blue;
     height: 14em;
-    margin: 1em;
+    margin: 0.5em;
 
     border-top-right-radius: 100%;
 }
@@ -23,7 +23,7 @@
 .amarillo{
     background-color: yellow;
     height: 14em;
-    margin: 1em;
+    margin: 0.5em;
 
     border-top-left-radius: 100%;
 }
@@ -31,6 +31,10 @@
 .verde{
     background-color: green;
     height: 14em;
-    margin: 1em;
+    margin: 0.5em;
     border-bottom-right-radius: 100%;
+}
+
+body{
+    background-color: grey;
 }

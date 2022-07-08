@@ -4,25 +4,28 @@ let rondas = 0;
 document.querySelector('#rondas').textContent = `Click en jugar para iniciar!`
 
 function reiniciarJuego (){
+    const $titulo = document.querySelector('.titulo');
+    $titulo.classList.remove('alert-danger')
+    $titulo.classList.add('alert-secondary')
     reiniciarJugadas();
+    bloquearUsuario();
     comenzarJuego();
 }
 
 function comenzarJuego(){
     secuenciaUsuario = [];
-    bloquearUsuario();
     const cuadroMaquina = generarSecuenciaMaquina();
     secuenciaMaquina.push(cuadroMaquina);
 
-    document.querySelector('#jugador').textContent = 'Maquina'
+    mostrarTurno('Maquina');
     secuenciaMaquina.forEach(function(cuadroMaquina , i){
-        const segundosPraproximo = 1000 * (i+1);
+        const segundosPraproximo = 500 * (i+1);
         setTimeout(function(){
             encenderCuadro(cuadroMaquina)
         },segundosPraproximo);
     });
 
-    const tiempoMaquina = 1000 * (secuenciaMaquina.length + 1);
+    const tiempoMaquina = 500 * (secuenciaMaquina.length + 1);
     setTimeout(function(){
         turnoJugador();
     },tiempoMaquina);
@@ -34,7 +37,7 @@ function comenzarJuego(){
 
 function turnoJugador(){
     document.querySelectorAll('.cuadro').forEach(function(cuadro){
-        document.querySelector('#jugador').textContent = 'Jugador'
+        mostrarTurno('Jugador');
         cuadro.onclick = generarSecuenciaUsuario;
     });
 }
@@ -46,11 +49,12 @@ function generarSecuenciaUsuario(event){
     const $cuadroMaquina = secuenciaMaquina[secuenciaUsuario.length - 1]
 
     if($cuadro.id !==  $cuadroMaquina.id){
-        document.querySelector('#rondas').textContent = `Perdiste`
+        finDeJuego();
         return;
     }
 
-    if (secuenciaMaquina.length === secuenciaUsuario.length) {
+    if (secuenciaMaquina.length === secuenciaUsuario.length){
+        bloquearUsuario();
         setTimeout(comenzarJuego, 1000)
     }
     
@@ -74,15 +78,35 @@ function encenderCuadro(cuadro){
 
     setTimeout(function(){
     cuadro.style.opacity = 0.5;
-    },500);  
+    },250);  
 
 }
 
 function bloquearUsuario(){
     document.querySelectorAll('.cuadro').forEach(function(cuadro){
-        cuadro.onclick = console.log('nada');
+        cuadro.onclick = function(){
+        };
     });
 }
+
+function mostrarTurno(player){
+    const $titulo = document.querySelector('.titulo');
+    $titulo.textContent = `Turno de ${player}`;
+}
+
+function ocultarJugador(){
+    const $titulo = document.querySelector('.titulo');
+    $titulo.textContent = '';
+}
+
+function finDeJuego(){
+    const $titulo = document.querySelector('.titulo');
+    $titulo.textContent = `Perdiste!`
+    $titulo.classList.remove('alert-secondary')
+    $titulo.classList.add('alert-danger')
+    bloquearUsuario();
+}
+
 
 function reiniciarJugadas(){
     secuenciaUsuario = [];
